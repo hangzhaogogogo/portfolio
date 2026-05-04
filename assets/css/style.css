@@ -2189,3 +2189,23 @@ ul li {
 .social-item .social-link:hover {
   background: #555555;
 }
+
+/*-----------------------------------*\
+  #PORTFOLIO FILTER TEXT (MAKE BLACK)
+\*-----------------------------------*/
+
+/* Filter buttons: All, Research, Teaching, etc. */
+.filter-item button {
+  color: #000000 !important;
+}
+
+/* Active filter (optional highlight) */
+.filter-item button.active {
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+/* Hover effect */
+.filter-item button:hover {
+  color: #000000 !important;
+}
