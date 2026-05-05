@@ -2209,3 +2209,30 @@ ul li {
 .filter-item button:hover {
   color: #000000 !important;
 }
+
+/*-----------------------------------*\
+  #CONTACT PAGE TEXT FIX (ONLY THIS SECTION)
+\*-----------------------------------*/
+
+/* Target ONLY contact page */
+.contact .contact-title {
+  color: #000000 !important;
+  font-weight: 600;
+}
+
+.contact .contact-link {
+  color: #000000 !important;
+}
+
+.contact .contact-info address {
+  color: #000000 !important;
+}
+
+.contact .contact-info time {
+  color: #000000 !important;
+}
+
+/* Add space below contact items */
+.contact-item {
+  margin-bottom: 20px;
+}
