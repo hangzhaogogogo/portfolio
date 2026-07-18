@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="IE=edge">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Stata research code examples for Difference-in-Differences, propensity score matching, panel data analysis, and event-study visualization.">
+
+  <title>Research Code Showcase | Hang Zhao</title>
+
+  <!-- Favicon -->
+  <link
+    rel="shortcut icon"
+    href="../assets/images/logo.ico"
+    type="image/x-icon">
+
+  <!-- Main website CSS -->
+  <link
+    rel="stylesheet"
+    href="../assets/css/style.css">
+
+  <!-- Google Font -->
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Roboto+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /*
+      Page-level styles
+    */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #222;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .code-page {
+      width: 100%;
+      max-width: 1180px;
+      margin: 50px auto;
+      padding: 30px;
+    }
+
+    .code-article {
+      background: #fff;
+      border-radius: 24px;
+      padding: 50px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    /*
+      Header
+    */
+
+    .article-header {
+      margin-bottom: 35px;
+    }
+
+    .article-label {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: #f4f0e4;
+      color: #765b00;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    .article-title {
+      margin: 0 0 12px;
+      color: #111;
+      font-size: 42px;
+      line-height: 1.2;
+    }
+
+    .article-subtitle {
+      max-width: 850px;
+      margin: 0;
+      color: #5f6368;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 22px;
+      margin-top: 20px;
+      color: #737373;
+      font-size: 14px;
+    }
+
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    /*
+      Hero image
+    */
+
+    .hero-image {
+      margin: 0 0 35px;
+    }
+
+    .hero-image img {
+      display: block;
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+
+    /*
+      Overview
+    */
+
+    .overview-box {
+      margin-bottom: 40px;
+      padding: 25px;
+      border: 1px solid #e4e4e4;
+      border-left: 5px solid #ffb400;
+      border-radius: 14px;
+      background: #fafafa;
+    }
+
+    .overview-box h2 {
+      margin: 0 0 12px;
+      color: #161616;
+      font-size: 22px;
+    }
+
+    .overview-box p {
+      margin: 0;
+      color: #555;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .methods-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .methods-list li {
+      padding: 7px 12px;
+      border: 1px solid #dedede;
+      border-radius: 999px;
+      background: #fff;
+      color: #444;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    /*
+      Navigation
+    */
+
+    .page-navigation {
+      margin-bottom: 45px;
+      padding: 22px 25px;
+      border-radius: 14px;
+      background: #f5f5f5;
+    }
+
+    .page-navigation h2 {
+      margin: 0 0 14px;
+      color: #222;
+      font-size: 18px;
+    }
+
+    .page-navigation ol {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .page-navigation li {
+      margin: 7px 0;
+      color: #555;
+    }
+
+    .page-navigation a {
+      color: #8b6500;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .page-navigation a:hover {
+      text-decoration: underline;
+    }
+
+    /*
+      Code sections
+    */
+
+    .code-section {
+      margin-bottom: 50px;
+      scroll-margin-top: 25px;
+    }
+
+    .section-number {
+      margin-bottom: 5px;
+      color: #aa7a00;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      color: #151515;
+      font-size: 27px;
+      line-height: 1.3;
+    }
+
+    .section-description {
+      max-width: 900px;
+      margin: 0 0 20px;
+      color: #5a5a5a;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    /*
+      Code box
+    */
+
+    .code-card {
+      overflow: hidden;
+      border: 1px solid #d8d8d8;
+      border-radius: 14px;
+      background: #181818;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+    }
+
+    .code-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 12px 18px;
+      border-bottom: 1px solid #333;
+      background: #252525;
+    }
+
+    .code-card-title {
+      color: #f1f1f1;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .code-language {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #3b3b3b;
+      color: #ffda70;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    pre {
+      max-height: 620px;
+      margin: 0;
+      padding: 22px;
+      overflow: auto;
+      background: #181818;
+      color: #e8e8e8;
+      font-family: "Roboto Mono", monospace;
+      font-size: 13px;
+      line-height: 1.75;
+      tab-size: 2;
+      white-space: pre;
+    }
+
+    code {
+      font-family: inherit;
+    }
+
+    /*
+      Basic Stata-style syntax formatting
+    */
+
+    .comment {
+      color: #8abf8a;
+    }
+
+    .command {
+      color: #82c7ff;
+    }
+
+    .string {
+      color: #e6bf7a;
+    }
+
+    .macro {
+      color: #d9a7ff;
+    }
+
+    /*
+      Notes and disclaimer
+    */
+
+    .research-note {
+      margin-top: 18px;
+      padding: 17px 20px;
+      border-radius: 12px;
+      background: #fff8e3;
+      color: #55430c;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .research-note strong {
+      color: #3e3007;
+    }
+
+    .disclaimer {
+      margin-top: 20px;
+      padding: 25px;
+      border: 1px solid #e1e1e1;
+      border-radius: 14px;
+      background: #f8f8f8;
+    }
+
+    .disclaimer h2 {
+      margin: 0 0 10px;
+      color: #222;
+      font-size: 20px;
+    }
+
+    .disclaimer p {
+      margin: 0;
+      color: #5a5a5a;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    /*
+      Footer
+    */
+
+    .article-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-top: 45px;
+      padding-top: 25px;
+      border-top: 1px solid #e2e2e2;
+    }
+
+    .back-to-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #966c00;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-to-home:hover {
+      color: #684a00;
+      text-decoration: underline;
+    }
+
+    .footer-note {
+      color: #858585;
+      font-size: 13px;
+      text-align: right;
+    }
+
+    /*
+      Mobile layout
+    */
+
+    @media (max-width: 768px) {
+      .code-page {
+        margin: 20px auto;
+        padding: 14px;
+      }
+
+      .code-article {
+        padding: 25px 20px;
+        border-radius: 18px;
+      }
+
+      .article-title {
+        font-size: 32px;
+      }
+
+      .article-subtitle {
+        font-size: 15px;
+      }
+
+      .section-title {
+        font-size: 23px;
+      }
+
+      pre {
+        padding: 17px;
+        font-size: 12px;
+      }
+
+      .code-card-header {
+        align-items: flex-start;
+      }
+
+      .article-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-note {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="code-page">
+
+    <div class="code-article">
+
+      <!-- Page header -->
+      <header class="article-header">
+
+        <span class="article-label">
+          Empirical Research Methods
+        </span>
+
+        <h1 class="article-title">
+          Research Code Showcase
+        </h1>
+
+        <p class="article-subtitle">
+          Sample Stata code from a study examining food insecurity before
+          and after gray divorce. The workflow demonstrates panel-data
+          preparation, Difference-in-Differences estimation, propensity
+          score matching, marital-transition analysis, and event-study
+          visualization.
+        </p>
+
+        <div class="article-meta">
+
+          <span class="meta-item">
+            <ion-icon name="code-slash-outline"></ion-icon>
+            Stata
+          </span>
+
+          <span class="meta-item">
+            <ion-icon name="analytics-outline"></ion-icon>
+            Causal Inference
+          </span>
+
+          <span class="meta-item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            Updated July 2026
+          </span>
+
+        </div>
+
+      </header>
+
+      <!-- Banner image -->
+      <figure class="hero-image">
+        <img
+          src="../assets/images/stata.png"
+          alt="Stata research code and statistical analysis">
+      </figure>
+
+      <!-- Overview -->
+      <section class="overview-box">
+
+        <h2>Project Overview</h2>
+
+        <p>
+          This demonstration presents a simplified empirical workflow for
+          analyzing the relationship between gray divorce and food
+          insecurity using longitudinal survey data. The code illustrates
+          common methods used in applied economics, health economics, and
+          public-policy research.
+        </p>
+
+        <ul class="methods-list">
+          <li>Panel Data</li>
+          <li>Data Reshaping</li>
+          <li>Difference-in-Differences</li>
+          <li>Fixed Effects</li>
+          <li>Propensity Score Matching</li>
+          <li>Event Study</li>
+          <li>Clustered Standard Errors</li>
+        </ul>
+
+      </section>
+
+      <!-- Page contents -->
+      <nav class="page-navigation" aria-label="Page contents">
+
+        <h2>Code Sections</h2>
+
+        <ol>
+          <li>
+            <a href="#data-preparation">
+              Panel-data preparation
+            </a>
+          </li>
+
+          <li>
+            <a href="#did-analysis">
+              Difference-in-Differences analysis
+            </a>
+          </li>
+
+          <li>
+            <a href="#matching">
+              Propensity score matching
+            </a>
+          </li>
+
+          <li>
+            <a href="#remarriage">
+              Remarriage and marital-transition analysis
+            </a>
+          </li>
+
+          <li>
+            <a href="#visualization">
+              Event-study visualization
+            </a>
+          </li>
+        </ol>
+
+      </nav>
+
+      <!-- Section 1 -->
+      <section
+        class="code-section"
+        id="data-preparation">
+
+        <p class="section-number">
+          Section 01
+        </p>
+
+        <h2 class="section-title">
+          Panel-Data Preparation
+        </h2>
+
+        <p class="section-description">
+          The first step loads the Health and Retirement Study panel,
+          retains the variables required for analysis, reshapes the data
+          from wide to long format, assigns survey years, and constructs
+          marital-status and income variables.
+        </p>
+
+        <div class="code-card">
+
+          <div class="code-card-header">
+            <span class="code-card-title">
+              Data loading, reshaping, and variable construction
+            </span>
+
+            <span class="code-language">
+              Stata
+            </span>
+          </div>
+
+          <pre><code><span class="comment">* Gray Divorce Study - Food Insecurity Analysis</span>
+<span class="comment">* Load and reshape HRS panel data</span>
+
+<span class="command">use</span> <span class="string">"HRS_grayDiv.dta"</span>, clear
+
+<span class="command">keep</span> hhidpn foodInsec* female ragey_b rmstat ///
+    hhIncome baseline_weight
+
+<span class="command">reshape long</span> foodInsec@ ragey_b@ rmstat@ hhIncome@, ///
+    i(hhidpn) j(period) string
+
+
+<span class="comment">* Create survey-year variable</span>
+
+<span class="command">gen</span> year = .
+
+<span class="command">replace</span> year = 1998 if period == <span class="string">"4"</span>
+<span class="command">replace</span> year = 2000 if period == <span class="string">"5"</span>
+<span class="command">replace</span> year = 2002 if period == <span class="string">"6"</span>
+
+
+<span class="comment">* Define marital status</span>
+
+<span class="command">gen</span> marital_s = .
+
+<span class="command">replace</span> marital_s = 1 if rmstat &gt;= 1 &amp; rmstat &lt;= 3
+<span class="command">replace</span> marital_s = 2 if rmstat &gt;= 4 &amp; rmstat &lt;= 6
+
+<span class="command">label define</span> marital_s ///
+    1 <span class="string">"Married"</span> ///
+    2 <span class="string">"Divorced"</span>
+
+<span class="command">label values</span> marital_s marital_s
+
+
+<span class="comment">* Create treatment and post-divorce indicators</span>
+
+<span class="command">bysort</span> hhidpn (year): ///
+    <span class="command">egen</span> everDiv = max(marital_s == 2)
+
+<span class="command">gen</span> treat = everDiv
+<span class="command">gen</span> post  = marital_s == 2
+
+
+<span class="comment">* Transform household income</span>
+
+<span class="command">gen</span> loghhincome = log(hhIncome)
+<span class="command">gen</span> age_sq      = ragey_b^2</code></pre>
+
+        </div>
+
+        <div class="research-note">
+          <strong>Purpose:</strong> Reshaping the data creates one
+          observation per individual and survey wave, making the dataset
+          suitable for longitudinal fixed-effects and event-study models.
+        </div>
+
+      </section>
+
+      <!-- Section 2 -->
+      <section
+        class="code-section"
+        id="did-analysis">
+
+        <p class="section-number">
+          Section 02
+        </p>
+
+        <h2 class="section-title">
+          Difference-in-Differences Analysis
+        </h2>
+
+        <p class="section-description">
+          The model estimates the change in food insecurity associated
+          with divorce while controlling for age, household income,
+          survey-year effects, and time-invariant individual
+          characteristics. Standard errors are clustered at the
+          individual level.
+        </p>
+
+        <div class="code-card">
+
+          <div class="code-card-header">
+            <span class="code-card-title">
+              Individual fixed-effects DiD model
+            </span>
+
+            <span class="code-language">
+              Stata
+            </span>
+          </div>
+
+          <pre><code><span class="comment">* Difference-in-Differences regression</span>
+
+<span class="command">areg</span> foodInsec ///
+    i.treat##i.post ///
+    ragey_b ///
+    age_sq ///
+    loghhincome ///
+    i.year ///
+    [pweight = baseline_weight], ///
+    absorb(hhidpn) ///
+    vce(cluster hhidpn)</code></pre>
+
+        </div>
+
+        <div class="research-note">
+          <strong>Interpretation:</strong> The coefficient on the
+          treatment-by-post interaction measures the estimated change in
+          food insecurity among individuals experiencing divorce,
+          relative to the comparison group.
+        </div>
+
+      </section>
+
+      <!-- Section 3 -->
+      <section
+        class="code-section"
+        id="matching">
+
+        <p class="section-number">
+          Section 03
+        </p>
+
+        <h2 class="section-title">
+          Propensity Score Matching
+        </h2>
+
+        <p class="section-description">
+          Propensity scores are estimated using observable demographic
+          and socioeconomic characteristics. The score distributions are
+          examined before one-to-one nearest-neighbor matching is
+          conducted with a caliper and without replacement.
+        </p>
+
+        <div class="code-card">
+
+          <div class="code-card-header">
+            <span class="code-card-title">
+              Propensity-score estimation and diagnostics
+            </span>
+
+            <span class="code-language">
+              Stata
+            </span>
+          </div>
+
+          <pre><code><span class="comment">* Step 1: Estimate propensity scores</span>
+
+<span class="command">local</span> treatment <span class="string">"treat"</span>
+
+<span class="command">local</span> match_var ///
+    <span class="string">"female ragey_b loghhincome hispanic black othrace
+     leshsdg hsdeg college snap"</span>
+
+<span class="command">logit</span> <span class="macro">`treatment'</span> <span class="macro">`match_var'</span> ///
+    if <span class="macro">`treatment'</span> != . &amp; n == 1
+
+<span class="command">predict</span> ps if n == 1, pr
+
+
+<span class="comment">* Step 2: Summarize propensity-score distributions</span>
+
+<span class="command">summarize</span> ps if n == 1
+
+<span class="command">tabstat</span> ps, ///
+    statistics(mean sd) ///
+    by(<span class="macro">`treatment'</span>)
+
+
+<span class="comment">* Plot overlapping propensity-score distributions</span>
+
+<span class="command">twoway</span> ///
+    (histogram ps if <span class="macro">`treatment'</span> == 0 &amp; n == 1, ///
+        bin(50) start(0) ///
+        lcolor(gray) fcolor(gray)) ///
+    (histogram ps if <span class="macro">`treatment'</span> == 1 &amp; n == 1, ///
+        bin(50) start(0) ///
+        lcolor(black) fcolor(none)), ///
+    legend( ///
+        order(1 <span class="string">"Stable Partnership"</span> ///
+              2 <span class="string">"Approaching Divorce"</span>) ///
+        position(12) cols(1)) ///
+    graphregion( ///
+        fcolor(white) ///
+        ifcolor(white) ///
+        ilcolor(white)) ///
+    xtitle(<span class="string">"Propensity Score"</span>) ///
+    xlabel(0(0.1)0.4, format(%3.1f)) ///
+    ytitle(<span class="string">"Density of Observations"</span>) ///
+    xscale(noline) ///
+    yscale(noline)</code></pre>
+
+        </div>
+
+        <br>
+
+        <div class="code-card">
+
+          <div class="code-card-header">
+            <span class="code-card-title">
+              One-to-one matching and matched-pair construction
+            </span>
+
+            <span class="code-language">
+              Stata
+            </span>
+          </div>
+
+          <pre><code><span class="comment">* Step 3: One-to-one nearest-neighbor matching</span>
+
+<span class="command">psmatch2</span> treat if n == 1, ///
+    pscore(ps) ///
+    outcome(foodInsec) ///
+    caliper(0.001) ///
+    noreplacement ///
+    neighbor(1)
+
+
+<span class="comment">* Construct matched-pair identifiers</span>
+
+<span class="command">gen</span> pair = _id if _treated == 0 &amp; n == 1
+
+<span class="command">replace</span> pair = _n1 ///
+    if _treated == 1 &amp; n == 1
+
+<span class="command">bysort</span> pair: ///
+    <span class="command">egen</span> paircount = count(pair) if n == 1
+
+<span class="command">gen</span> validpair = ///
+    paircount &gt; 1 &amp; n == 1
+
+<span class="command">bysort</span> hhidpn: ///
+    <span class="command">egen</span> validpair_all = max(validpair)
+
+<span class="command">drop if</span> validpair_all != 1
+
+<span class="command">drop</span> pair paircount validpair validpair_all</code></pre>
+
+        </div>
+
+        <div class="research-note">
+          <strong>Research consideration:</strong> Matching quality
+          should also be evaluated through covariate-balance statistics
+          and common-support diagnostics, rather than relying only on
+          propensity-score overlap.
+        </div>
+
+      </section>
+
+      <!-- Section 4 -->
+      <section
+        class="code-section"
+        id="remarriage">
+
+        <p class="section-number">
+          Section 04
+        </p>
+
+        <h2 class="section-title">
+          Remarriage and Marital Transitions
+        </h2>
+
+        <p class="section-description">
+          This section identifies changes in marital status over time,
+          counts marital transitions, and constructs an indicator for
+          individuals who experience remarriage after divorce.
+        </p>
+
+        <div class="code-card">
+
+          <div class="code-card-header">
+            <span class="code-card-title">
+              Longitudinal marital-transition indicators
+            </span>
+
+            <span class="code-language">
+              Stata
+            </span>
+          </div>
+
+          <pre><code><span class="comment">* Declare the panel structure</span>
+
+<span class="command">xtset</span> hhidpn year
+
+<span class="command">gen</span> marital_r = marital_s
+
+
+<span class="comment">* Identify changes between marital states</span>
+
+<span class="command">bysort</span> hhidpn (year): ///
+    <span class="command">gen</span> transition = ///
+    marital_r != marital_r[_n - 1]
+
+<span class="command">bysort</span> hhidpn (year): ///
+    <span class="command">replace</span> transition = 0 if _n == 1
+
+
+<span class="comment">* Identify individuals with no observed transition</span>
+
+<span class="command">bysort</span> hhidpn: ///
+    <span class="command">egen</span> NT = ///
+    min(cond(transition == 1, 0, 1))
+
+
+<span class="comment">* Count total marital transitions</span>
+
+<span class="command">bysort</span> hhidpn: ///
+    <span class="command">egen</span> num_transition = ///
+    total(transition)
+
+
+<span class="comment">* Identify transitions from divorce to marriage</span>
+
+<span class="command">bysort</span> hhidpn (year): ///
+    <span class="command">gen</span> remarried = ///
+    num_transition &gt;= 1 &amp; ///
+    transition == 1 &amp; ///
+    marital_r[_n - 1] == 2 &amp; ///
+    marital_r == 1
+
+
+<span class="comment">* Retain remarriage status during subsequent married waves</span>
+
+<span class="command">bysort</span> hhidpn (year): ///
+    <span class="command">replace</span> remarried = 1 ///
+    if remarried[_n - 1] == 1 &amp; ///
+       remarried == 0 &amp; ///
+       marital_r == 1
+
+
+<span class="comment">* Indicator for any observed remarriage experience</span>
+
+<span class="command">bysort</span> hhidpn: ///
+    <span class="command">egen</span> remarrExp = ///
+    max(remarried == 1)</code></pre>
+
+        </div>
+
+        <div class="research-note">
+          <strong>Code clarification:</strong> In this page,
+          <code>marital_s = 1</code> represents married and
+          <code>marital_s = 2</code> represents divorced. Therefore, the
+          remarriage transition is coded as a movement from status 2 to
+          status 1.
+        </div>
+
+      </section>
+
+      <!-- Section 5 -->
+      <section
+        class="code-section"
+        id="visualization">
+
+        <p class="section-number">
+          Section 05
+        </p>
+
+        <h2 class="section-title">
+          Event-Study Estimation and Visualization
+        </h2>
+
+        <p class="section-description">
+          The event-study specification estimates food-insecurity
+          outcomes at several periods before and after divorce. The
+          coefficients are then plotted with 95% confidence intervals to
+          show the timing and persistence of estimated changes.
+        </p>
+
+        <div class="code-card">
+
+          <div class="code-card-header">
+            <span class="code-card-title">
+              Event-study regression and coefficient plot
+            </span>
+
+            <span class="code-language">
+              Stata
+            </span>
+          </div>
+
+          <pre><code><span class="comment">* Estimate the event-study model</span>
+
+<span class="command">areg</span> foodInsec ///
+    tm3 tm2 o.tm1 tm0 tp1 tp2 tp3 ///
+    <span class="macro">$x</span> yy* ///
+    [pweight = baseline_weight] ///
+    if divExp == 1, ///
+    absorb(hhidpn)
+
+<span class="command">estimates store</span> foodInsec
+
+
+<span class="comment">* Plot event-study coefficients</span>
+
+<span class="command">coefplot</span> ///
+    (foodInsec, label(<span class="string">"Food Insecurity"</span>)), ///
+    omitted ///
+    drop(_cons <span class="macro">$x</span> yy*) ///
+    vertical ///
+    baselevels ///
+    xlabel(, angle(0)) ///
+    connect(l) ///
+    rename( ///
+        tm3 = <span class="string">"-6 or more"</span> ///
+        tm2 = <span class="string">"-4"</span> ///
+        tm1 = <span class="string">"-2"</span> ///
+        tm0 = <span class="string">"0"</span> ///
+        tp1 = <span class="string">"+2"</span> ///
+        tp2 = <span class="string">"+4"</span> ///
+        tp3 = <span class="string">"+6 or more"</span>) ///
+    ci(95) ///
+    xline(4) ///
+    yline(0, lpattern(dash)) ///
+    graphregion( ///
+        fcolor(white) ///
+        ifcolor(white) ///
+        ilcolor(white)) ///
+    ylabel( ///
+        -0.1(0.1)0.2, ///
+        format(%3.1f) ///
+        noticks ///
+        nogrid) ///
+    ytitle(<span class="string">"Change in prevalence of food insecurity"</span>) ///
+    xtitle(<span class="string">"Years before/after gray divorce"</span>) ///
+    title(<span class="string">"Food Insecurity"</span>)</code></pre>
+
+        </div>
+
+        <div class="research-note">
+          <strong>Interpretation:</strong> The omitted pre-divorce
+          period serves as the reference category. Pre-treatment
+          coefficients can be used to assess trends before divorce,
+          while post-divorce coefficients illustrate the evolution of
+          food insecurity following the marital transition.
+        </div>
+
+      </section>
+
+      <!-- Disclaimer -->
+      <section class="disclaimer">
+
+        <h2>Research Code Notice</h2>
+
+        <p>
+          These examples are simplified and reformatted for demonstration
+          purposes. Variable definitions, sample restrictions, survey
+          weights, identification assumptions, and diagnostic tests
+          should be reviewed carefully before using the code in another
+          research project. The underlying restricted research dataset
+          is not distributed through this website.
+        </p>
+
+      </section>
+
+      <!-- Footer -->
+      <footer class="article-footer">
+
+        <a
+          class="back-to-home"
+          href="../index.html">
+
+          <ion-icon name="arrow-back-outline"></ion-icon>
+
+          Back to the main website
+        </a>
+
+        <span class="footer-note">
+          Hang Zhao · Research Code Showcase
+        </span>
+
+      </footer>
+
+    </div>
+
+  </main>
+
+  <!-- Ionicons -->
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js">
+  </script>
+
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js">
+  </script>
+
+</body>
+
+</html>
