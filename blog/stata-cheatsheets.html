@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="IE=edge">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="Download a collection of Stata cheat sheets covering data analysis, programming, data processing, data transformation, and data visualization.">
+
+  <title>Stata Cheat Sheets | Hang Zhao</title>
+
+  <!-- Favicon -->
+  <link
+    rel="shortcut icon"
+    href="../assets/images/logo.ico"
+    type="image/x-icon">
+
+  <!-- Main website CSS -->
+  <link
+    rel="stylesheet"
+    href="../assets/css/style.css">
+
+  <!-- Google Fonts -->
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+
+    /* =========================
+       General page styles
+    ========================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #202124;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .resource-page {
+      width: 100%;
+      max-width: 1180px;
+      margin: 50px auto;
+      padding: 30px;
+    }
+
+    .resource-article {
+      overflow: hidden;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+
+
+    /* =========================
+       Hero section
+    ========================== */
+
+    .hero-section {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 45px;
+      padding: 55px;
+      background:
+        linear-gradient(
+          135deg,
+          #ffffff 0%,
+          #f6f8fb 60%,
+          #eef2f7 100%
+        );
+    }
+
+    .hero-label {
+      display: inline-block;
+      margin-bottom: 15px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: #ebeef3;
+      color: #3d4653;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      margin: 0 0 16px;
+      color: #111;
+      font-size: 46px;
+      line-height: 1.15;
+    }
+
+    .hero-description {
+      max-width: 680px;
+      margin: 0 0 25px;
+      color: #5f6368;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .meta-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px;
+      border: 1px solid #dfe3e8;
+      border-radius: 999px;
+      background: #fff;
+      color: #4e5968;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .hero-image-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-image {
+      display: block;
+      width: 100%;
+      max-width: 430px;
+      max-height: 310px;
+      object-fit: contain;
+      border: 1px solid #e1e4e8;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+    }
+
+
+    /* =========================
+       Download buttons
+    ========================== */
+
+    .download-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .primary-download,
+    .secondary-download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 13px 21px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .primary-download {
+      background: #111;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    }
+
+    .primary-download:hover {
+      background: #2c2c2c;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.22);
+    }
+
+    .secondary-download {
+      border: 1px solid #cdd3da;
+      background: #fff;
+      color: #252525;
+    }
+
+    .secondary-download:hover {
+      background: #f3f5f7;
+      transform: translateY(-2px);
+    }
+
+
+    /* =========================
+       Main content
+    ========================== */
+
+    .content-section {
+      padding: 50px 55px;
+    }
+
+    .section-header {
+      max-width: 800px;
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      margin: 0 0 10px;
+      color: #171717;
+      font-size: 30px;
+      line-height: 1.3;
+    }
+
+    .section-description {
+      margin: 0;
+      color: #656b73;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+
+    /* =========================
+       Resource cards
+    ========================== */
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .resource-card {
+      position: relative;
+      padding: 25px;
+      border: 1px solid #e1e4e8;
+      border-radius: 16px;
+      background: #fafbfc;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-4px);
+      border-color: #cbd1d8;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+    }
+
+    .resource-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      background: #171717;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .resource-card h3 {
+      margin: 0 0 10px;
+      color: #1e1e1e;
+      font-size: 19px;
+    }
+
+    .resource-card p {
+      margin: 0;
+      color: #62676e;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .resource-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .resource-topic {
+      padding: 5px 9px;
+      border: 1px solid #dfe3e8;
+      border-radius: 999px;
+      background: #fff;
+      color: #5b6169;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+
+    /* =========================
+       Main download section
+    ========================== */
+
+    .download-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 30px;
+      margin-top: 50px;
+      padding: 30px;
+      border-radius: 18px;
+      background: #171717;
+      color: #fff;
+    }
+
+    .download-panel h2 {
+      margin: 0 0 8px;
+      color: #fff;
+      font-size: 25px;
+    }
+
+    .download-panel p {
+      max-width: 650px;
+      margin: 0;
+      color: #c7c7c7;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .download-panel-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-width: 190px;
+      padding: 14px 22px;
+      border-radius: 10px;
+      background: #fff;
+      color: #111;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .download-panel-button:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+
+    /* =========================
+       PDF preview
+    ========================== */
+
+    .preview-section {
+      padding: 0 55px 50px;
+    }
+
+    .pdf-preview {
+      width: 100%;
+      height: 720px;
+      border: 1px solid #dfe3e8;
+      border-radius: 16px;
+      background: #f5f5f5;
+    }
+
+    .preview-fallback {
+      margin-top: 12px;
+      color: #6d7278;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .preview-fallback a {
+      color: #222;
+      font-weight: 600;
+    }
+
+
+    /* =========================
+       Attribution
+    ========================== */
+
+    .attribution-section {
+      margin: 0 55px 50px;
+      padding: 27px;
+      border: 1px solid #e0e3e7;
+      border-left: 5px solid #222;
+      border-radius: 14px;
+      background: #f8f9fa;
+    }
+
+    .attribution-section h2 {
+      margin: 0 0 12px;
+      color: #222;
+      font-size: 21px;
+    }
+
+    .attribution-section p {
+      margin: 0 0 10px;
+      color: #5e646b;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .attribution-section p:last-child {
+      margin-bottom: 0;
+    }
+
+
+    /* =========================
+       Footer
+    ========================== */
+
+    .article-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 25px 55px;
+      border-top: 1px solid #e1e4e8;
+      background: #fafafa;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #222;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer-note {
+      color: #858585;
+      font-size: 12px;
+      text-align: right;
+    }
+
+
+    /* =========================
+       Mobile responsive styles
+    ========================== */
+
+    @media (max-width: 850px) {
+
+      .resource-page {
+        margin: 20px auto;
+        padding: 14px;
+      }
+
+      .hero-section {
+        grid-template-columns: 1fr;
+        padding: 35px 25px;
+      }
+
+      .hero-title {
+        font-size: 36px;
+      }
+
+      .hero-image-wrapper {
+        order: -1;
+      }
+
+      .hero-image {
+        max-width: 350px;
+        max-height: 230px;
+      }
+
+      .content-section,
+      .preview-section {
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .download-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .download-panel-button {
+        width: 100%;
+      }
+
+      .attribution-section {
+        margin-left: 25px;
+        margin-right: 25px;
+      }
+
+      .article-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+
+      .footer-note {
+        text-align: left;
+      }
+
+      .pdf-preview {
+        height: 560px;
+      }
+    }
+
+    @media (max-width: 500px) {
+
+      .hero-title {
+        font-size: 31px;
+      }
+
+      .download-actions {
+        flex-direction: column;
+      }
+
+      .primary-download,
+      .secondary-download {
+        width: 100%;
+      }
+
+      .content-section {
+        padding-top: 35px;
+      }
+
+      .pdf-preview {
+        height: 460px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <main class="resource-page">
+
+    <div class="resource-article">
+
+      <!-- =========================
+           Hero section
+      ========================== -->
+
+      <header class="hero-section">
+
+        <div class="hero-content">
+
+          <span class="hero-label">
+            Teaching and Research Resource
+          </span>
+
+          <h1 class="hero-title">
+            Stata Cheat Sheets
+          </h1>
+
+          <p class="hero-description">
+            A practical collection of quick-reference materials for
+            students, instructors, and researchers using Stata for data
+            management, statistical analysis, programming, and
+            visualization.
+          </p>
+
+          <div class="hero-meta">
+
+            <span class="meta-tag">
+              <ion-icon name="document-text-outline"></ion-icon>
+              6-page PDF
+            </span>
+
+            <span class="meta-tag">
+              <ion-icon name="code-slash-outline"></ion-icon>
+              Stata
+            </span>
+
+            <span class="meta-tag">
+              <ion-icon name="school-outline"></ion-icon>
+              Educational Resource
+            </span>
+
+          </div>
+
+          <div class="download-actions">
+
+            <!--
+              The download attribute asks the browser to download
+              the PDF instead of opening it.
+            -->
+            <a
+              href="../assets/files/statacheatsheets.pdf"
+              class="primary-download"
+              download="Stata-Cheat-Sheets.pdf">
+
+              <ion-icon name="download-outline"></ion-icon>
+
+              Download PDF
+            </a>
+
+            <!--
+              This version opens the PDF in a new browser tab.
+            -->
+            <a
+              href="../assets/files/statacheatsheets.pdf"
+              class="secondary-download"
+              target="_blank"
+              rel="noopener noreferrer">
+
+              <ion-icon name="open-outline"></ion-icon>
+
+              Open in Browser
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="hero-image-wrapper">
+
+          <img
+            src="../assets/images/statacheatsheet.png"
+            class="hero-image"
+            alt="Preview of the Stata cheat sheets">
+
+        </div>
+
+      </header>
+
+
+      <!-- =========================
+           Resource overview
+      ========================== -->
+
+      <section class="content-section">
+
+        <div class="section-header">
+
+          <h2 class="section-title">
+            What Is Included
+          </h2>
+
+          <p class="section-description">
+            The collection provides concise examples of frequently used
+            Stata commands, syntax, workflows, and graphical options.
+            Each section can serve as a quick reference during coursework
+            or empirical research.
+          </p>
+
+        </div>
+
+        <div class="resource-grid">
+
+          <!-- Card 1 -->
+          <article class="resource-card">
+
+            <span class="resource-number">01</span>
+
+            <h3>Data Analysis</h3>
+
+            <p>
+              Commands for descriptive statistics, hypothesis testing,
+              regression, panel data, survey analysis, time-series
+              methods, diagnostics, and postestimation.
+            </p>
+
+            <div class="resource-topics">
+              <span class="resource-topic">Regression</span>
+              <span class="resource-topic">Panel Data</span>
+              <span class="resource-topic">Survey Data</span>
+              <span class="resource-topic">Postestimation</span>
+            </div>
+
+          </article>
+
+
+          <!-- Card 2 -->
+          <article class="resource-card">
+
+            <span class="resource-number">02</span>
+
+            <h3>Programming</h3>
+
+            <p>
+              An introduction to macros, matrices, scalars, loops,
+              stored results, temporary files, debugging, and exporting
+              regression output.
+            </p>
+
+            <div class="resource-topics">
+              <span class="resource-topic">Macros</span>
+              <span class="resource-topic">Loops</span>
+              <span class="resource-topic">Matrices</span>
+              <span class="resource-topic">Stored Results</span>
+            </div>
+
+          </article>
+
+
+          <!-- Card 3 -->
+          <article class="resource-card">
+
+            <span class="resource-number">03</span>
+
+            <h3>Data Processing</h3>
+
+            <p>
+              Quick-reference commands for importing data, exploring
+              variables, creating new variables, changing data types,
+              summarizing observations, and applying logical conditions.
+            </p>
+
+            <div class="resource-topics">
+              <span class="resource-topic">Import Data</span>
+              <span class="resource-topic">Explore Data</span>
+              <span class="resource-topic">Generate Variables</span>
+              <span class="resource-topic">Data Types</span>
+            </div>
+
+          </article>
+
+
+          <!-- Card 4 -->
+          <article class="resource-card">
+
+            <span class="resource-number">04</span>
+
+            <h3>Data Transformation</h3>
+
+            <p>
+              Examples of subsetting, recoding, labeling, reshaping,
+              merging, appending, string manipulation, and exporting
+              cleaned datasets.
+            </p>
+
+            <div class="resource-topics">
+              <span class="resource-topic">Reshape</span>
+              <span class="resource-topic">Merge</span>
+              <span class="resource-topic">Append</span>
+              <span class="resource-topic">Strings</span>
+            </div>
+
+          </article>
+
+
+          <!-- Card 5 -->
+          <article class="resource-card">
+
+            <span class="resource-number">05</span>
+
+            <h3>Data Visualization</h3>
+
+            <p>
+              Syntax and examples for scatterplots, histograms, bar
+              charts, box plots, fitted lines, coefficient plots,
+              marginal-effects plots, and combined figures.
+            </p>
+
+            <div class="resource-topics">
+              <span class="resource-topic">Scatterplots</span>
+              <span class="resource-topic">Histograms</span>
+              <span class="resource-topic">Coefficient Plots</span>
+              <span class="resource-topic">Marginsplot</span>
+            </div>
+
+          </article>
+
+
+          <!-- Card 6 -->
+          <article class="resource-card">
+
+            <span class="resource-number">06</span>
+
+            <h3>Graph Customization</h3>
+
+            <p>
+              Options for graph colors, text, marker symbols, line
+              patterns, labels, legends, themes, plot regions, and
+              exporting publication-ready figures.
+            </p>
+
+            <div class="resource-topics">
+              <span class="resource-topic">Colors</span>
+              <span class="resource-topic">Markers</span>
+              <span class="resource-topic">Themes</span>
+              <span class="resource-topic">Export Graphs</span>
+            </div>
+
+          </article>
+
+        </div>
+
+
+        <!-- Large download panel -->
+        <div class="download-panel">
+
+          <div>
+
+            <h2>
+              Download the Complete Collection
+            </h2>
+
+            <p>
+              Save the complete six-page PDF for use during class,
+              research, data analysis, or independent Stata practice.
+            </p>
+
+          </div>
+
+          <a
+            href="../assets/files/statacheatsheets.pdf"
+            class="download-panel-button"
+            download="Stata-Cheat-Sheets.pdf">
+
+            <ion-icon name="cloud-download-outline"></ion-icon>
+
+            Download PDF
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           Embedded PDF preview
+      ========================== -->
+
+      <section class="preview-section">
+
+        <div class="section-header">
+
+          <h2 class="section-title">
+            Preview the Cheat Sheets
+          </h2>
+
+          <p class="section-description">
+            You can scroll through the document below before downloading it.
+          </p>
+
+        </div>
+
+        <iframe
+          class="pdf-preview"
+          src="../assets/files/statacheatsheets.pdf#view=FitH"
+          title="Preview of Stata Cheat Sheets">
+        </iframe>
+
+        <p class="preview-fallback">
+          The preview may not display in every browser.
+          <a
+            href="../assets/files/statacheatsheets.pdf"
+            target="_blank"
+            rel="noopener noreferrer">
+            Open the PDF in a new tab
+          </a>
+          or use the download button above.
+        </p>
+
+      </section>
+
+
+      <!-- =========================
+           Attribution and license
+      ========================== -->
+
+      <section class="attribution-section">
+
+        <h2>
+          Attribution and License
+        </h2>
+
+        <p>
+          These cheat sheets were created by Tim Essam and Laura Hughes
+          and were inspired by RStudio’s cheat-sheet resources.
+        </p>
+
+        <p>
+          The materials are shared under the Creative Commons Attribution
+          4.0 International license. They are presented on this website
+          for educational and reference purposes.
+        </p>
+
+        <p>
+          The original materials note that the creators are not affiliated
+          with Stata. Users should consult Stata’s official documentation
+          for current command syntax, software changes, and detailed
+          technical guidance.
+        </p>
+
+      </section>
+
+
+      <!-- =========================
+           Footer
+      ========================== -->
+
+      <footer class="article-footer">
+
+        <a
+          href="../index.html"
+          class="back-link">
+
+          <ion-icon name="arrow-back-outline"></ion-icon>
+
+          Back to the main website
+        </a>
+
+        <span class="footer-note">
+          Hang Zhao · Teaching Resources
+        </span>
+
+      </footer>
+
+    </div>
+
+  </main>
+
+
+  <!-- Ionicons -->
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js">
+  </script>
+
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js">
+  </script>
+
+</body>
+
+</html>
