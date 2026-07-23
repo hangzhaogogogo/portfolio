@@ -157,3 +157,31 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+/*-----------------------------------*\
+  #ABOUT PAGE TO RESUME PAGE
+\*-----------------------------------*/
+
+const aboutResumeBtn =
+  document.querySelector("[data-about-resume]");
+
+if (aboutResumeBtn) {
+
+  aboutResumeBtn.addEventListener("click", function (event) {
+
+    event.preventDefault();
+
+    const resumeNavButton =
+      Array.from(
+        document.querySelectorAll("[data-nav-link]")
+      ).find((button) =>
+        button.textContent.trim().toLowerCase() === "resume"
+      );
+
+    if (resumeNavButton) {
+      resumeNavButton.click();
+    }
+
+  });
+
+}
